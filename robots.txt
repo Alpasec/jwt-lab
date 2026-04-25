@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /level-1
+Disallow: /level-2
+Disallow: /api/
+
+# Hint: L21lX2VuY29udHJhc3RlX2Rldg==

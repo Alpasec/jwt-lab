@@ -1,0 +1,247 @@
+/* ==========================================================================
+   Variables y Sistema de Diseño (Design System)
+   ========================================================================== */
+:root {
+    /* Paleta de Colores (Light Theme) */
+    --bg-color: #f0f4f8;
+    --text-color: #1a202c;
+    --card-bg: rgba(255, 255, 255, 0.85);
+    --primary-color: #3182ce;
+    --primary-hover: #2b6cb0;
+    --secondary-color: #718096;
+    --danger-color: #e53e3e;
+    --danger-hover: #c53030;
+    --warning-color: #dd6b20;
+    --warning-hover: #c05621;
+    --success-color: #38a169;
+    --border-color: #e2e8f0;
+    
+    /* Efecto Glassmorphism */
+    --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.18);
+    
+    --font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    --border-radius: 12px;
+    --transition-speed: 0.3s;
+}
+
+/* Dark Theme (Activado vía JS y localStorage) */
+body.dark-theme {
+    --bg-color: #1a202c;
+    --text-color: #f7fafc;
+    --card-bg: rgba(45, 55, 72, 0.85);
+    --primary-color: #63b3ed;
+    --primary-hover: #4299e1;
+    --secondary-color: #a0aec0;
+    --danger-color: #fc8181;
+    --danger-hover: #f56565;
+    --warning-color: #f6ad55;
+    --border-color: #4a5568;
+    --glass-border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ==========================================================================
+   Estilos Base y Reset
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+    min-height: 100vh;
+    padding-bottom: 40px;
+}
+
+/* ==========================================================================
+   Componentes Visuales
+   ========================================================================== */
+.warning-banner {
+    background: linear-gradient(90deg, #e53e3e, #dd6b20);
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.app-header {
+    text-align: center;
+    padding: 40px 20px 20px;
+}
+
+.app-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(45deg, var(--primary-color), #805ad5);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dashboard {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+@media (min-width: 900px) {
+    .dashboard {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .state-panel { grid-column: 1 / 2; }
+    .actions-panel { grid-column: 2 / 3; grid-row: 1 / 4; }
+    .admin-panel { grid-column: 1 / 2; }
+    .console-suggestions { grid-column: 1 / -1; }
+}
+
+/* Tarjetas (Glassmorphism) */
+.card {
+    background: var(--card-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--border-radius);
+    border: var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    padding: 24px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.1);
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    color: var(--primary-color);
+}
+
+h3 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: var(--secondary-color);
+}
+
+/* Panel de Estado */
+.state-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+@media (min-width: 500px) {
+    .state-grid { grid-template-columns: 1fr 1fr; }
+    .full-width { grid-column: 1 / -1; }
+}
+
+.state-item {
+    background: rgba(0, 0, 0, 0.03);
+    padding: 12px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+}
+
+body.dark-theme .state-item { background: rgba(255, 255, 255, 0.03); }
+
+.state-item .label {
+    font-size: 0.85rem;
+    color: var(--secondary-color);
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.state-item .value {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-top: 4px;
+    word-break: break-all;
+}
+
+/* Botones */
+.action-group { margin-bottom: 24px; }
+.action-group:last-child { margin-bottom: 0; }
+
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn:hover { background-color: var(--primary-hover); transform: scale(1.02); }
+.btn:active { transform: scale(0.98); }
+
+.btn-secondary { background-color: var(--secondary-color); }
+.btn-secondary:hover { background-color: #4a5568; }
+
+.btn-danger { background-color: var(--danger-color); }
+.btn-danger:hover { background-color: var(--danger-hover); }
+
+.btn-warning { background-color: var(--warning-color); }
+.btn-warning:hover { background-color: var(--warning-hover); }
+
+/* Utilidades y Textos */
+.code-style {
+    font-family: 'Courier New', Courier, monospace;
+    background: rgba(0,0,0,0.05);
+    padding: 2px 6px;
+    border-radius: 4px;
+}
+body.dark-theme .code-style { background: rgba(255,255,255,0.1); }
+
+.highlight-danger { color: var(--danger-color); font-weight: bold; }
+
+.command-list { list-style-type: none; margin-top: 15px; }
+.command-list li { margin-bottom: 10px; padding: 10px; background: rgba(0,0,0,0.03); border-left: 4px solid var(--primary-color); border-radius: 0 4px 4px 0; font-family: monospace; }
+body.dark-theme .command-list li { background: rgba(255,255,255,0.05); }
+
+/* Panel Admin (El que se ocultará/mostrará) */
+.admin-panel {
+    border: 2px solid var(--danger-color);
+    background: rgba(229, 62, 62, 0.05);
+}
+
+.hidden { display: none !important; }
+
+.admin-content {
+    background: rgba(0,0,0,0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.pedagogical-note {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--secondary-color);
+    border-top: 1px dashed var(--border-color);
+    padding-top: 10px;
+}

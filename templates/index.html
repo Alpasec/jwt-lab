@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/jwt_styles.css">
+</head>
+<body data-level="{{ level }}" class="level-{{ level }}">
+
+    <div class="lab-header">
+        <h1>JWT Security Lab</h1>
+        <p>Entorno 100% Educativo y Simulado</p>
+    </div>
+
+    <nav>
+        <a href="/">Secure (Correcto)</a>
+        <a href="/level-1">Level 1 (Sin Firma)</a>
+        <a href="/level-2">Level 2 (Secret Débil)</a>
+    </nav>
+
+    <div class="level-banner">
+        {% if level == 'level1' %}
+            🚨 VULNERABILIDAD ACTIVA: El backend acepta el JWT sin verificar la firma. Cambia el payload libremente.
+        {% elif level == 'level2' %}
+            🚨 VULNERABILIDAD ACTIVA: El backend verifica la firma, pero usa un secret muy débil ("muyseguro123").
+        {% endif %}
+    </div>
+
+    <div class="container">
+        <!-- Notificaciones -->
+        <div id="alert-box" class="alert hidden" style="grid-column: 1 / -1;"></div>
+
+        <!-- Panel de Autenticación -->
+        <div id="auth-panel" class="panel">
+            <h2>Autenticación</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Usuario (Admin: alpaca123)</label>
+                    <input type="text" name="username" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Contraseña (Igual al usuario en este lab)</label>
+                    <input type="password" name="password" class="form-control" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <button type="button" id="register-btn" class="btn btn-secondary">Registrar Nuevo Usuario</button>
+            </form>
+        </div>
+
+        <!-- Panel de Usuario y Token (Oculto sin auth) -->
+        <div id="user-panel" class="panel hidden">
+            <h2>Panel de Usuario</h2>
+            <div id="bank-profile"></div>
+            <hr style="margin: 1rem 0; border: 0; border-top: 1px solid #dee2e6;">
+            <button id="logout-btn" class="btn btn-danger">Logout</button>
+            <button id="admin-panel-btn" class="btn hidden" style="background-color: #6f42c1;">Ver todos los usuarios registrados (Admin Solo)</button>
+        </div>
+
+        <!-- Panel del JWT -->
+        <div class="panel">
+            <h2>Inspector de JWT</h2>
+            <p><strong>Token Crudo:</strong></p>
+            <div id="jwt-raw" class="code-box" style="margin-bottom: 1rem; word-break: break-all;">No hay token.</div>
+            <p><strong>Decodificado:</strong></p>
+            <div id="jwt-decoded" class="code-box"></div>
+        </div>
+
+        <!-- Panel Admin (Oculto por defecto) -->
+        <div id="admin-panel-container" class="panel admin-panel-container hidden">
+            <h2>Panel de Administración (Lectura Blob)</h2>
+            <p>Mostrando usuarios persistidos simulados.</p>
+            <div style="overflow-x: auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Nombre Simulado</th>
+                            <th>Tipo de Cuenta</th>
+                            <th>Saldo</th>
+                            <th>Tarjeta</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-data-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/jwt_app.js"></script>
+</body>
+</html>

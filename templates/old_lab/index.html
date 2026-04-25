@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab: Almacenamiento y Seguridad Web</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Google Fonts para mejor tipografía -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="light-theme">
+    <div class="warning-banner">
+        ⚠️ Aplicación intencionalmente insegura, solo para enseñanza local ⚠️
+    </div>
+
+    <header class="app-header">
+        <h1>Portal del Alumno: Demo Storage</h1>
+        <p>Explora cómo el navegador guarda información y por qué el frontend no es seguro.</p>
+    </header>
+
+    <main class="dashboard">
+        
+        <!-- SECCIÓN: ESTADO ACTUAL -->
+        <section class="card state-panel">
+            <h2>📊 Estado Actual</h2>
+            <div class="state-grid">
+                <div class="state-item">
+                    <span class="label">Rol (Cookie):</span>
+                    <span id="state-role" class="value highlight-danger">Desconocido</span>
+                </div>
+                <div class="state-item">
+                    <span class="label">Tema (localStorage):</span>
+                    <span id="state-theme" class="value">Claro</span>
+                </div>
+                <div class="state-item">
+                    <span class="label">Paso (sessionStorage):</span>
+                    <span id="state-step" class="value">Ninguno</span>
+                </div>
+                <div class="state-item">
+                    <span class="label">Cookies Activas:</span>
+                    <span id="state-cookies" class="value code-style">Ninguna</span>
+                </div>
+                <div class="state-item full-width">
+                    <span class="label">IndexedDB (Notas):</span>
+                    <span id="state-idb" class="value code-style">Vacío</span>
+                </div>
+                <div class="state-item full-width">
+                    <span class="label">Caché Activo:</span>
+                    <span id="state-cache" class="value code-style">Vacío</span>
+                </div>
+            </div>
+            <button id="btn-refresh-state" class="btn btn-secondary" style="margin-top: 15px;">🔄 Actualizar Vista</button>
+        </section>
+
+        <!-- SECCIÓN: PANEL ADMIN OCULTO -->
+        <section id="admin-panel" class="card admin-panel hidden">
+            <h2>🛡️ Panel de Administración Oculto</h2>
+            <p>¡Felicidades! Has accedido al área restringida. Si ves esto, significa que el navegador cree que eres un administrador.</p>
+            <div class="admin-content">
+                <p><strong>Datos confidenciales:</strong> La contraseña del servidor es <code>admin123_no_seguro</code></p>
+                <button class="btn btn-danger" onclick="alert('Acción destructiva ejecutada simuladamente.')">💥 Borrar Base de Datos</button>
+            </div>
+            <p class="pedagogical-note">Nota: Este panel está oculto solo por CSS/JS. El código HTML siempre viaja al cliente. Esto es una vulnerabilidad de <strong>Control de Acceso Inseguro</strong>.</p>
+        </section>
+
+        <!-- SECCIÓN: ACCIONES DE DEMO -->
+        <section class="card actions-panel">
+            <h2>🛠️ Acciones de Demo</h2>
+            
+            <div class="action-group">
+                <h3>1. localStorage (Persistente)</h3>
+                <div class="buttons">
+                    <button id="btn-theme-dark" class="btn">Tema Oscuro</button>
+                    <button id="btn-theme-light" class="btn">Tema Claro</button>
+                    <button id="btn-lang-en" class="btn">Idioma EN</button>
+                </div>
+            </div>
+
+            <div class="action-group">
+                <h3>2. sessionStorage (Por Pestaña)</h3>
+                <div class="buttons">
+                    <button id="btn-step-1" class="btn">Paso 1</button>
+                    <button id="btn-step-2" class="btn">Paso 2</button>
+                    <button id="btn-clear-session" class="btn btn-warning">Limpiar Sesión</button>
+                </div>
+            </div>
+
+            <div class="action-group">
+                <h3>3. Cookies (Viajan en peticiones)</h3>
+                <div class="buttons">
+                    <button id="btn-cookie-pref" class="btn">Cookie Preferencia</button>
+                    <button id="btn-cookie-user" class="btn">Rol = User</button>
+                    <button id="btn-cookie-admin" class="btn btn-danger">Rol = Admin</button>
+                    <button id="btn-clear-cookies" class="btn btn-warning">Borrar Cookies</button>
+                </div>
+            </div>
+
+            <div class="action-group">
+                <h3>4. IndexedDB (Base de datos cliente)</h3>
+                <div class="buttons">
+                    <button id="btn-idb-add" class="btn">Insertar Registro</button>
+                    <button id="btn-idb-read" class="btn">Leer Registros</button>
+                    <button id="btn-idb-clear" class="btn btn-warning">Borrar Todo IDB</button>
+                </div>
+            </div>
+
+            <div class="action-group">
+                <h3>5. Cache Storage (Archivos offline)</h3>
+                <div class="buttons">
+                    <button id="btn-cache-create" class="btn">Crear Caché Demo</button>
+                    <button id="btn-cache-read" class="btn">Leer Caché</button>
+                    <button id="btn-cache-clear" class="btn btn-warning">Limpiar Caché</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN: CONSOLA SUGERIDA -->
+        <section class="card console-suggestions">
+            <h2>💻 Consola Sugerida (Abre F12)</h2>
+            <p>Copia y pega estos comandos en la consola para explorar y hackear:</p>
+            <ul class="command-list">
+                <li><code>localStorage</code> - Ver todo el almacenamiento local.</li>
+                <li><code>sessionStorage</code> - Ver el almacenamiento de esta pestaña.</li>
+                <li><code>document.cookie</code> - Ver las cookies accesibles por JS.</li>
+                <li><code>document.cookie = "role=admin"</code> - <span class="highlight-danger">Elevación de privilegios!</span></li>
+                <li><code>document.getElementById('admin-panel').classList.remove('hidden')</code> - <span class="highlight-danger">Mostrar admin oculto!</span></li>
+                <li><code>caches.keys().then(console.log)</code> - Ver cachés disponibles.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
