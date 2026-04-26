@@ -41,7 +41,7 @@ def generate_bank_profile(username):
         
     return {
         "username": username,
-        "full_name": f"{username.capitalize()} (Simulated User)",
+        "full_name": f"{username.capitalize()}",
         "account_type": account_type,
         "account_number": account_num,
         "available_balance": balance,

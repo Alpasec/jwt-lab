@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <p><strong>Cuenta:</strong> ${profile.account_type} (${profile.account_number})</p>
             <p><strong>Saldo:</strong> $${profile.available_balance}</p>
             <p><strong>Tarjeta:</strong> ${profile.card_masked}</p>
-            <h4>Últimos movimientos falsos:</h4>
+            <h4>Últimos movimientos:</h4>
             <ul>${txHtml}</ul>
         `;
     }
